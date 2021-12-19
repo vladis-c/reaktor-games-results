@@ -1,0 +1,54 @@
+:root {
+  font-size: 16px;
+  --border-color: rgba(60, 131, 104, 0.472);
+}
+table {
+  border-collapse: separate;
+  border: 3px solid var(--border-color);
+  max-width: 100% auto;
+  text-align: center;
+  margin-left: 10px;
+}
+
+.thead,
+tr {
+  background-color: rgb(255, 240, 249);
+  border: 1px solid var(--border-color);
+}
+
+.tr,
+th {
+  text-align: center;
+  white-space: nowrap;
+  padding: 10px;
+  text-align: left;
+  background-color: rgb(240, 251, 255);
+  border: 1px solid var(--border-color);
+}
+
+.tbody,
+tr,
+td {
+  text-align: center;
+  white-space: nowrap;
+  width: 200px;
+  overflow-wrap: break-word;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+}
+.vs {
+  font-size: 18px;
+  font-weight: bold;
+  max-width: 50px;
+}
+.hand {
+  max-width: 100px;
+}
+
+.highlight {
+  background-color: rgba(97, 77, 77, 0.411);
+}
+
+.highlight-winner {
+  background-color: rgb(143, 209, 163);
+}
