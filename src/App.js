@@ -109,9 +109,6 @@ function App() {
 
   async function makeRequest(url) {
     let response = await instance.get(url).catch((error) => setErr(error))
-
-    // un// next 8 -- 1 rows to fetch from each page all data.
-
     if (response.data.cursor) {
       return [
         ...response.data.data,
