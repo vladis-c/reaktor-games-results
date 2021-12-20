@@ -6,10 +6,10 @@ import React, { useEffect, useState } from "react"
 import DataTable from "./datatables/DataTable"
 import LiveMatchesTable from "./datatables/LiveMatchesTable"
 
+// determine victory function
 const ROCK = "ROCK"
 const PAPER = "PAPER"
 const SCISSORS = "SCISSORS"
-
 export function determineVictory(hand1, hand2) {
   if (hand1 === hand2) {
     return 0
@@ -24,8 +24,8 @@ export function determineVictory(hand1, hand2) {
   return -1
 }
 
+// catching CORS error and error 429 when fetching history data
 let instance = axios.create()
-
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -61,6 +61,7 @@ axiosRetry(instance, {
   },
 })
 
+//main functional component
 function App() {
   const [data, setData] = useState([])
   const [search, setSearch] = useState("")
@@ -76,6 +77,7 @@ function App() {
   const [liveConnected, setLiveConnected] = useState(false)
   const [err, setErr] = useState(false)
 
+  //fetching LIVE and getting data  
   function handleLive() {
     setShowLive(true)
     setShowHistory(false)
@@ -107,6 +109,7 @@ function App() {
     })
   }
 
+  // fetching history and recording the data (2 functions)
   async function makeRequest(url) {
     let response = await instance.get(url).catch((error) => setErr(error))
     if (response.data.cursor) {
@@ -188,10 +191,11 @@ function App() {
     setData(result)
     setIsLoadingHistory(false)
   }
+
+  // handling search by names in historical data
   function handleSearch(event) {
     setSearch(event.target.value)
   }
-
   useEffect(() => {
     setSearchData(
       data.filter((value) => {
@@ -200,6 +204,7 @@ function App() {
     )
   }, [data, search])
 
+  // main component return
   return (
     <div>
       {err ? (
