@@ -6,6 +6,8 @@ import React, { useEffect, useState } from "react"
 import DataTable from "./datatables/DataTable"
 import LiveMatchesTable from "./datatables/LiveMatchesTable"
 
+const PORT = env.process.PORT || 8000;
+
 // determine victory function
 const ROCK = "ROCK"
 const PAPER = "PAPER"
@@ -24,25 +26,7 @@ export function determineVictory(hand1, hand2) {
   return -1
 }
 
-// catching CORS error and error 429 when fetching history data
 let instance = axios.create()
-instance.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (typeof error.response === "undefined") {
-      alert(
-        "Hello World! " +
-          "A network error occurred. " +
-          "This could be a CORS issue or a dropped internet connection. " +
-          "When preparing this task for REACTOR, I used a browser local:host, " +
-          "and came up with solution to download an extension for GoogleBrowser, which allows CORS. " +
-          "Looking through the internet, I found out that this must be solved on a server-side. " +
-          "So, this ALERT MESSAGE will pop up, if the CORS error is occured. "
-      )
-    }
-    return Promise.reject(error)
-  }
-)
 axiosRetry(instance, {
   retryCondition: (e) => {
     return (
@@ -112,16 +96,16 @@ function App() {
   // fetching history and recording the data (2 functions)
   async function makeRequest(url) {
     let response = await instance.get(url).catch((error) => setErr(error))
-    if (response.data.cursor) {
-      return [
-        ...response.data.data,
-        ...(await makeRequest(
-          `https://bad-api-assignment.reaktor.com${response.data.cursor}`
-        )),
-      ]
-    } else {
+    // if (response.data.cursor) {
+    //   return [
+    //     ...response.data.data,
+    //     ...(await makeRequest(
+    //       `http://localhost:${PORT}${response.data.cursor}`
+    //     )),
+    //   ]
+    // } else {
     return response.data.data
-    }
+    // }
   }
 
   async function handleHistory() {
@@ -133,7 +117,7 @@ function App() {
     setHistoryLoaded(true)
     setIsLoadingHistory(true)
     const initialArray = await makeRequest(
-      "https://bad-api-assignment.reaktor.com/rps/history/"
+      `http://localhost:${PORT}/rps/history/`
     )
     let combinedArray = []
     let allNames = []

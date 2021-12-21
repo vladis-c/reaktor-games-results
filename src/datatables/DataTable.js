@@ -5,8 +5,6 @@ import "./TableStyle.css"
 function DataTable({ data }) {
   const columns = data[0] && Object.keys(data[0])
 
-  console.log(columns)
-
   return (
     <div>
       <table>
