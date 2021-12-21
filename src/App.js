@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react"
 import DataTable from "./datatables/DataTable"
 import LiveMatchesTable from "./datatables/LiveMatchesTable"
 
-const PORT = env.process.PORT || 8000;
+const PORT = process.env.PORT || 8000;
 
 // determine victory function
 const ROCK = "ROCK"

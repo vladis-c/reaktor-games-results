@@ -1,4 +1,4 @@
-const PORT = env.process.PORT || 8000
+const PORT = process.env.PORT || 8000
 const express = require('express')
 const cors = require('cors')
 const { createProxyMiddleware } = require('http-proxy-middleware');
