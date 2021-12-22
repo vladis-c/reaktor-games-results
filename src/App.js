@@ -6,8 +6,6 @@ import React, { useEffect, useState } from "react"
 import DataTable from "./datatables/DataTable"
 import LiveMatchesTable from "./datatables/LiveMatchesTable"
 
-const PORT = process.env.PORT || 8000;
-
 // determine victory function
 const ROCK = "ROCK"
 const PAPER = "PAPER"
@@ -100,7 +98,7 @@ function App() {
     //   return [
     //     ...response.data.data,
     //     ...(await makeRequest(
-    //       `http://localhost:${PORT}${response.data.cursor}`
+    //       `${response.data.cursor}`
     //     )),
     //   ]
     // } else {
@@ -117,7 +115,7 @@ function App() {
     setHistoryLoaded(true)
     setIsLoadingHistory(true)
     const initialArray = await makeRequest(
-      `http://localhost:${PORT}/rps/history/`
+      `/rps/history/`
     )
     let combinedArray = []
     let allNames = []
