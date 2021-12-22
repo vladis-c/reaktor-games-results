@@ -98,16 +98,16 @@ function App() {
   // fetching history and recording the data (2 functions)
   async function makeRequest(url) {
     let response = await instance.get(url).catch((error) => setErr(error))
-    // if (response.data.cursor) {
-    //   return [
-    //     ...response.data.data,
-    //     ...(await makeRequest(
-    //       `${HOST}${response.data.cursor}`
-    //     )),
-    //   ]
-    // } else {
-    return response.data.data
-    // }
+    if (response.data.cursor) {
+      return [
+        ...response.data.data,
+        ...(await makeRequest(
+          `${HOST}${response.data.cursor}`
+        )),
+      ]
+    } else {
+      return response.data.data
+    }
   }
 
   async function handleHistory() {
