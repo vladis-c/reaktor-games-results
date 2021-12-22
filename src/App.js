@@ -240,7 +240,7 @@ function App() {
                     <div className="form-control">
                       <input
                         className="input"
-                        placeHolder="Search..."
+                        placeholder="Search..."
                         type="text"
                         onChange={handleSearch}
                       />
