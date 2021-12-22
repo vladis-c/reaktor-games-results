@@ -16,7 +16,6 @@
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "http-proxy-middleware": "^2.0.1",
-    "http-server": "^14.0.0",
     "nodemon": "^2.0.15",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.3",
@@ -28,7 +27,7 @@
     "dev": "concurrently \"npm run dev:react\" \"npm run dev:server\"",
     "dev:react": "react-scripts start",
     "dev:server": "nodemon src/server.js",
-    "start": "http-server build -p $PORT",
+    "start": "node src/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
