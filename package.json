@@ -15,9 +15,13 @@
     "concurrently": "^6.5.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
+    "eslint-config-airbnb": "^19.0.2",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "express": "^4.17.2",
     "http-proxy-middleware": "^2.0.1",
     "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.3",
     "react-dom": "^17.0.2",
@@ -31,7 +35,8 @@
     "start": "node src/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint */**/*.js --quiet --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -50,5 +55,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
   }
 }

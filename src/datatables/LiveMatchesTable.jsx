@@ -1,9 +1,25 @@
 import React from "react"
-import { determineVictory } from "../App"
+import determineVictory from "../util"
 
 import "./TableStyle.css"
 
-function LiveMatchesTable({ data }) {
+const LiveMatchesTable = function ({ data }) {
+  function getResultText(row) {
+    if (
+      row.playerA?.played &&
+      row.playerB?.played &&
+      determineVictory(row.playerA?.played, row.playerB?.played) === 0
+    ) {
+      return "DRAW"
+    }
+    if (determineVictory(row.playerA?.played, row.playerB?.played) === 1) {
+      return `${row.playerA?.name} WON`
+    }
+    if (determineVictory(row.playerA?.played, row.playerB?.played) === -1) {
+      return `${row.playerB?.name} WON`
+    }
+    return ""
+  }
   return (
     <div>
       <table>
@@ -12,7 +28,7 @@ function LiveMatchesTable({ data }) {
             <tr>
               <th>Name</th>
               <th>Hand</th>
-              <th></th>
+              <th>{}</th>
               <th>Name</th>
               <th>Hand</th>
               <th>Result</th>
@@ -30,7 +46,8 @@ function LiveMatchesTable({ data }) {
             >
               <td
                 className={
-                  determineVictory(row.playerA?.played, row.playerB?.played) === 1 && "highlight-winner"
+                  determineVictory(row.playerA?.played, row.playerB?.played) ===
+                    1 && "highlight-winner"
                 }
               >
                 {row.playerA?.name}
@@ -39,18 +56,14 @@ function LiveMatchesTable({ data }) {
               <td className="vs">VS</td>
               <td
                 className={
-                  determineVictory(row.playerA?.played, row.playerB?.played) === -1 && "highlight-winner"
+                  determineVictory(row.playerA?.played, row.playerB?.played) ===
+                    -1 && "highlight-winner"
                 }
               >
                 {row.playerB?.name}
               </td>
               <td className="hand">{row.playerB?.played}</td>
-              <td>
-                {row.playerA?.played && row.playerB?.played && determineVictory(row.playerA?.played, row.playerB?.played) === 0 ? `DRAW`
-                  : determineVictory(row.playerA?.played, row.playerB?.played) === 1 ? `${row.playerA?.name} WON`
-                  : determineVictory(row.playerA?.played, row.playerB?.played) === -1 ? `${row.playerB?.name} WON`
-                  : ``}
-              </td>
+              <td>{getResultText()}</td>
               <td>
                 {row.playerA?.played && row.playerB?.played
                   ? "GAME OVER"

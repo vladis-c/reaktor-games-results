@@ -2,7 +2,7 @@ import React from "react"
 
 import "./TableStyle.css"
 
-function DataTable({ data }) {
+const DataTable = function ({ data }) {
   const columns = data[0] && Object.keys(data[0])
 
   return (
@@ -21,8 +21,8 @@ function DataTable({ data }) {
         <tbody>
           {data.map((row, key) => (
             <tr key={key}>
-              {columns.map((column, key) => (
-                <td key={key}>{row[column]}</td>
+              {columns.map((column, index) => (
+                <td key={index}>{row[column]}</td>
               ))}
             </tr>
           ))}

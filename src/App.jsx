@@ -5,52 +5,32 @@ import axiosRetry from "axios-retry"
 import React, { useEffect, useState } from "react"
 import DataTable from "./datatables/DataTable"
 import LiveMatchesTable from "./datatables/LiveMatchesTable"
+import { ROCK, PAPER, SCISSORS, determineVictory } from "./util"
 
 const HOST = process.env.REACT_APP_URL
 
-// determine victory function
-const ROCK = "ROCK"
-const PAPER = "PAPER"
-const SCISSORS = "SCISSORS"
-export function determineVictory(hand1, hand2) {
-  if (hand1 === hand2) {
-    return 0
-  }
-  if (
-    (hand1 === ROCK && hand2 === SCISSORS) ||
-    (hand1 === PAPER && hand2 === ROCK) ||
-    (hand1 === SCISSORS && hand2 === PAPER)
-  ) {
-    return 1
-  }
-  return -1
-}
-
-let instance = axios.create()
+const instance = axios.create()
 axiosRetry(instance, {
-  retryCondition: (e) => {
-    return (
-      axiosRetry.isNetworkOrIdempotentRequestError(e) ||
-      e.response.status === 429
-    )
-  },
+  retryCondition: (e) =>
+    axiosRetry.isNetworkOrIdempotentRequestError(e) ||
+    e.response.status === 429,
   retryDelay: (retryCount, error) => {
     if (error.response) {
-      const retry_after = error.response.headers["Retry-After"]
-      if (retry_after) {
-        return retry_after
+      const retryAfter = error.response.headers["Retry-After"]
+      if (retryAfter) {
+        return retryAfter
       }
     }
     return retryCount * 60000
   },
 })
 
-//main functional component
-function App() {
+// main functional component
+const App = function () {
   const [data, setData] = useState([])
   const [search, setSearch] = useState("")
   const [searchData, setSearchData] = useState([])
-  const [liveConnect, setLiveConnect] = useState(null)
+  const [, setLiveConnect] = useState(null)
   const [liveData, setLiveData] = useState([])
   const [isLoadingHistory, setIsLoadingHistory] = useState(false)
   const [showLive, setShowLive] = useState(false)
@@ -59,7 +39,7 @@ function App() {
   const [liveConnected, setLiveConnected] = useState(false)
   const [err, setErr] = useState(false)
 
-  //fetching LIVE and getting data
+  // fetching LIVE and getting data
   function handleLive() {
     setShowLive(true)
     setShowHistory(false)
@@ -70,21 +50,21 @@ function App() {
       "wss://bad-api-assignment.reaktor.com/rps/live"
     )
     setLiveConnected(true)
-    socket.addEventListener("message", ({ data }) => {
-      const parsedData = JSON.parse(JSON.parse(data))
+    socket.addEventListener("message", ({ messageData }) => {
+      const parsedData = JSON.parse(JSON.parse(messageData))
       if (parsedData.type === "GAME_BEGIN") {
         setLiveData((currentData) => [...currentData, parsedData])
       } else if (parsedData.type === "GAME_RESULT") {
         setLiveData((currentData) => {
-          let modifiedData = currentData.filter(
-            (data) => data.gameId !== parsedData.gameId
+          const modifiedData = currentData.filter(
+            (d) => d.gameId !== parsedData.gameId
           )
           modifiedData.push(parsedData)
           return modifiedData
         })
         setTimeout(() => {
           setLiveData((currentData) =>
-            currentData.filter((data) => data.gameId !== parsedData.gameId)
+            currentData.filter((d) => d.gameId !== parsedData.gameId)
           )
         }, 10000)
       }
@@ -97,17 +77,14 @@ function App() {
 
   // fetching history and recording the data (2 functions)
   async function makeRequest(url) {
-    let response = await instance.get(url).catch((error) => setErr(error))
+    const response = await instance.get(url).catch((error) => setErr(error))
     if (response.data.cursor) {
       return [
         ...response.data.data,
-        ...(await makeRequest(
-          `${HOST}${response.data.cursor}`
-        )),
+        ...(await makeRequest(`${HOST}${response.data.cursor}`)),
       ]
-    } else {
-      return response.data.data
     }
+    return response.data.data
   }
 
   async function handleHistory() {
@@ -119,9 +96,9 @@ function App() {
     setHistoryLoaded(true)
     setIsLoadingHistory(true)
     const initialArray = await makeRequest(`${HOST}/rps/history/`)
-    let combinedArray = []
+    const combinedArray = []
     let allNames = []
-    for (let i = 0; i < initialArray.length; i++) {
+    for (let i = 0; i < initialArray.length; i += 1) {
       allNames.push(initialArray[i].playerA.name)
       allNames.push(initialArray[i].playerB.name)
       combinedArray.push({
@@ -182,9 +159,9 @@ function App() {
   }
   useEffect(() => {
     setSearchData(
-      data.filter((value) => {
-        return value.name.toLowerCase().includes(search.toLowerCase())
-      })
+      data.filter((value) =>
+        value.name.toLowerCase().includes(search.toLowerCase())
+      )
     )
   }, [data, search])
 
@@ -192,24 +169,33 @@ function App() {
   return (
     <div>
       {err ? (
+        // eslint-disable-next-line no-alert
         alert("ERROR OCCURED")
       ) : (
         <div>
           <div>
             {!showHistory && (
-              <button className="button" onClick={() => handleHistory()}>
+              <button
+                type="button"
+                className="button"
+                onClick={() => handleHistory()}
+              >
                 {historyLoaded ? "Show history" : "Fetch History!"}
               </button>
             )}
             {!showLive && (
-              <button className="button" onClick={() => handleLive()}>
+              <button
+                type="button"
+                className="button"
+                onClick={() => handleLive()}
+              >
                 Live
               </button>
             )}
           </div>
 
           <div>
-            {showLive ? (
+            {showLive && (
               <div>
                 {liveData.length !== 0 ? (
                   <div>
@@ -218,42 +204,40 @@ function App() {
                   </div>
                 ) : (
                   <div className="lds-ellipsis">
-                    <div id="1"></div>
-                    <div id="2"></div>
-                    <div id="3"></div>
-                    <div id="4"></div>
-                  </div>
-                )}
-              </div>
-            ) : isLoadingHistory ? (
-              <div className="lds-ellipsis">
-                <div id="5"></div>
-                <div id="6"></div>
-                <div id="7"></div>
-                <div id="8"></div>
-              </div>
-            ) : (
-              <div>
-                {showHistory && (
-                  <div>
-                    <h1>HISTORY</h1>
-                    <div className="form-control">
-                      <input
-                        className="input"
-                        placeholder="Search..."
-                        type="text"
-                        onChange={handleSearch}
-                      />
-                    </div>
-                    {searchData.length === 0 ? (
-                      <label className="error-text">Nothing found!</label>
-                    ) : (
-                      <DataTable data={searchData} />
-                    )}
+                    <div id="1" />
+                    <div id="2" />
+                    <div id="3" />
+                    <div id="4" />
                   </div>
                 )}
               </div>
             )}
+            {showHistory &&
+              (isLoadingHistory ? (
+                <div className="lds-ellipsis">
+                  <div id="5" />
+                  <div id="6" />
+                  <div id="7" />
+                  <div id="8" />
+                </div>
+              ) : (
+                <div>
+                  <h1>HISTORY</h1>
+                  <div className="form-control">
+                    <input
+                      className="input"
+                      placeholder="Search..."
+                      type="text"
+                      onChange={handleSearch}
+                    />
+                  </div>
+                  {searchData.length === 0 ? (
+                    <label className="error-text">Nothing found!</label>
+                  ) : (
+                    <DataTable data={searchData} />
+                  )}
+                </div>
+              ))}
           </div>
         </div>
       )}
