@@ -1,13 +1,8 @@
-## Reaktor Pre-Assignment
+# Reaktor Pre-Assignment
 
 ### Vladislav Cherkasheninov December 2021
 
 ### About the project
-
-TBD
-*task, what app does. pages
-*node, react, mini-server
-*Packages used
 
 This is a pre-assignment task from Reaktor. The task was to implement a web application that displays rock-paper-scissors match results. The web application displays the games as they are in progress and historical results of individual players. The historical results include all games that a player has played and the following aggregate data: win ratio, total number of matches played, and the most played hand (rock, paper, or scissors).
 
