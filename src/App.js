@@ -6,6 +6,8 @@ import React, { useEffect, useState } from "react"
 import DataTable from "./datatables/DataTable"
 import LiveMatchesTable from "./datatables/LiveMatchesTable"
 
+const HOST = process.env.REACT_APP_URL
+
 // determine victory function
 const ROCK = "ROCK"
 const PAPER = "PAPER"
@@ -98,7 +100,7 @@ function App() {
     //   return [
     //     ...response.data.data,
     //     ...(await makeRequest(
-    //       `${response.data.cursor}`
+    //       `${HOST}${response.data.cursor}`
     //     )),
     //   ]
     // } else {
@@ -115,7 +117,7 @@ function App() {
     setHistoryLoaded(true)
     setIsLoadingHistory(true)
     const initialArray = await makeRequest(
-      `/rps/history/`
+      `${HOST}/rps/history/`
     )
     let combinedArray = []
     let allNames = []
