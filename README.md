@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+## Reaktor Pre-Assignment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Vladislav Cherkasheninov December 2021
 
-## Available Scripts
+### About the project
 
-In the project directory, you can run:
+TBD
+*task, what app does. pages
+*node, react, mini-server
+*Packages used
 
-### `npm start`
+This is a pre-assignment task from Reaktor. The task was to implement a web application that displays rock-paper-scissors match results. The web application displays the games as they are in progress and historical results of individual players. The historical results include all games that a player has played and the following aggregate data: win ratio, total number of matches played, and the most played hand (rock, paper, or scissors).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+There are two buttons History and Live. Feel free to ckick on them, to see historical results and live results correspondingly. 
+History: search can be performed by name to see only one particular player result.
+Live: when any match starts, it recors it in the table. When match is over, it shows the winner, highlights the line that the match is over, and highlights the winner (if not a Draw). The line disappears in 10 seconds after result is recieved.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+React.js, Node.js, axios, express are used in the project and code quality is mainained with eslint. Project includes mini-server.
 
-### `npm test`
+### App URL
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The app is deployed to Heroku and running at:
 
-### `npm run build`
+[https://reaktor-task-vladislav.herokuapp.com](https://reaktor-task-vladislav.herokuapp.com/)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### How to start
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To install dependencies:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+npm install
+```
 
-### `npm run eject`
+To run locally:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+npm run dev
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Linter
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+I'm using `eslint-config-airbnb`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+To run linter:
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+npm run lint
+```
