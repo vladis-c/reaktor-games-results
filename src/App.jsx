@@ -33,15 +33,14 @@ const App = function () {
   const [, setLiveConnect] = useState(null)
   const [liveData, setLiveData] = useState([])
   const [isLoadingHistory, setIsLoadingHistory] = useState(false)
-  const [showLive, setShowLive] = useState(false)
   const [showHistory, setShowHistory] = useState(false)
   const [historyLoaded, setHistoryLoaded] = useState(false)
   const [liveConnected, setLiveConnected] = useState(false)
   const [err, setErr] = useState(false)
 
   // fetching LIVE and getting data
+
   function handleLive() {
-    setShowLive(true)
     setShowHistory(false)
     if (liveConnected) {
       return
@@ -75,6 +74,8 @@ const App = function () {
     setLiveConnect(socket)
   }
 
+  useEffect(() => handleLive())
+
   // fetching history and recording the data (2 functions)
   async function makeRequest(url) {
     const response = await instance.get(url).catch((error) => setErr(error))
@@ -89,7 +90,6 @@ const App = function () {
 
   async function handleHistory() {
     setShowHistory(true)
-    setShowLive(false)
     if (historyLoaded) {
       return
     }
@@ -174,44 +174,32 @@ const App = function () {
       ) : (
         <div>
           <div>
-            {!showHistory && (
+            {!historyLoaded && (
               <button
                 type="button"
                 className="button"
                 onClick={() => handleHistory()}
               >
-                {historyLoaded ? "Show history" : "Fetch History!"}
-              </button>
-            )}
-            {!showLive && (
-              <button
-                type="button"
-                className="button"
-                onClick={() => handleLive()}
-              >
-                Live
+                History
               </button>
             )}
           </div>
 
           <div>
-            {showLive && (
+            {liveData.length === 0 ? (
+              <div className="lds-ellipsis">
+                <div id="1" />
+                <div id="2" />
+                <div id="3" />
+                <div id="4" />
+              </div>
+            ) : (
               <div>
-                {liveData.length !== 0 ? (
-                  <div>
-                    <h1>LIVE</h1>
-                    <LiveMatchesTable data={liveData} />
-                  </div>
-                ) : (
-                  <div className="lds-ellipsis">
-                    <div id="1" />
-                    <div id="2" />
-                    <div id="3" />
-                    <div id="4" />
-                  </div>
-                )}
+                <h1>LIVE</h1>
+                <LiveMatchesTable data={liveData} />
               </div>
             )}
+
             {showHistory &&
               (isLoadingHistory ? (
                 <div className="lds-ellipsis">
