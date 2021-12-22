@@ -1,5 +1,5 @@
 import React from "react"
-import determineVictory from "../util"
+import { determineVictory } from "../util/util"
 
 import "./TableStyle.css"
 
