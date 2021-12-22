@@ -50,9 +50,7 @@ function App() {
   const [data, setData] = useState([])
   const [search, setSearch] = useState("")
   const [searchData, setSearchData] = useState([])
-  const [liveConnect] = useState(
-    new WebSocket("wss://bad-api-assignment.reaktor.com/rps/live")
-  )
+  const [liveConnect, setLiveConnect] = useState(null)
   const [liveData, setLiveData] = useState([])
   const [isLoadingHistory, setIsLoadingHistory] = useState(false)
   const [showLive, setShowLive] = useState(false)
@@ -61,19 +59,19 @@ function App() {
   const [liveConnected, setLiveConnected] = useState(false)
   const [err, setErr] = useState(false)
 
-  //fetching LIVE and getting data  
+  //fetching LIVE and getting data
   function handleLive() {
     setShowLive(true)
     setShowHistory(false)
     if (liveConnected) {
       return
     }
+    const socket = new WebSocket(
+      "wss://bad-api-assignment.reaktor.com/rps/live"
+    )
     setLiveConnected(true)
-    liveConnect.addEventListener("message", ({ data }) => {
+    socket.addEventListener("message", ({ data }) => {
       const parsedData = JSON.parse(JSON.parse(data))
-      liveConnect.addEventListener("error", (error) => {
-        setErr(error)
-      })
       if (parsedData.type === "GAME_BEGIN") {
         setLiveData((currentData) => [...currentData, parsedData])
       } else if (parsedData.type === "GAME_RESULT") {
@@ -91,6 +89,10 @@ function App() {
         }, 10000)
       }
     })
+    socket.addEventListener("error", (error) => {
+      setErr(error)
+    })
+    setLiveConnect(socket)
   }
 
   // fetching history and recording the data (2 functions)
@@ -116,9 +118,7 @@ function App() {
     }
     setHistoryLoaded(true)
     setIsLoadingHistory(true)
-    const initialArray = await makeRequest(
-      `${HOST}/rps/history/`
-    )
+    const initialArray = await makeRequest(`${HOST}/rps/history/`)
     let combinedArray = []
     let allNames = []
     for (let i = 0; i < initialArray.length; i++) {
