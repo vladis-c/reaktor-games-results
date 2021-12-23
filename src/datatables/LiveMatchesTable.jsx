@@ -63,7 +63,7 @@ const LiveMatchesTable = function ({ data }) {
                 {row.playerB?.name}
               </td>
               <td className="hand">{row.playerB?.played}</td>
-              <td>{getResultText()}</td>
+              <td>{getResultText(row)}</td>
               <td>
                 {row.playerA?.played && row.playerB?.played
                   ? "GAME OVER"
