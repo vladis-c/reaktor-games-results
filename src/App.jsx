@@ -41,7 +41,6 @@ const App = function () {
   // fetching LIVE and getting data
 
   function handleLive() {
-    setShowHistory(false)
     if (liveConnected) {
       return
     }
