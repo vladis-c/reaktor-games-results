@@ -47,7 +47,9 @@ const LiveMatchesTable = function ({ data }) {
               <td
                 className={
                   determineVictory(row.playerA?.played, row.playerB?.played) ===
-                    1 && "highlight-winner"
+                  1
+                    ? "highlight-winner"
+                    : undefined
                 }
               >
                 {row.playerA?.name}
@@ -57,7 +59,9 @@ const LiveMatchesTable = function ({ data }) {
               <td
                 className={
                   determineVictory(row.playerA?.played, row.playerB?.played) ===
-                    -1 && "highlight-winner"
+                  -1
+                    ? "highlight-winner"
+                    : undefined
                 }
               >
                 {row.playerB?.name}
