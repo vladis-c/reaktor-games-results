@@ -172,25 +172,16 @@ const App = function () {
         alert("ERROR OCCURED")
       ) : (
         <div>
-          <div>
-            {!historyLoaded && (
-              <button
-                type="button"
-                className="button"
-                onClick={() => handleHistory()}
-              >
-                History
-              </button>
-            )}
-          </div>
-
-          <div>
+          <div style={{ minHeight: "500px" }}>
             {liveData.length === 0 ? (
-              <div className="lds-ellipsis">
-                <div id="1" />
-                <div id="2" />
-                <div id="3" />
-                <div id="4" />
+              <div>
+                <h1>LIVE IS LOADING</h1>
+                <div className="lds-ellipsis">
+                  <div id="1" />
+                  <div id="2" />
+                  <div id="3" />
+                  <div id="4" />
+                </div>
               </div>
             ) : (
               <div>
@@ -198,14 +189,30 @@ const App = function () {
                 <LiveMatchesTable data={liveData} />
               </div>
             )}
+          </div>
+          <div>
+            <div>
+              {!historyLoaded && (
+                <button
+                  type="button"
+                  className="button"
+                  onClick={() => handleHistory()}
+                >
+                  History
+                </button>
+              )}
+            </div>
 
             {showHistory &&
               (isLoadingHistory ? (
-                <div className="lds-ellipsis">
-                  <div id="5" />
-                  <div id="6" />
-                  <div id="7" />
-                  <div id="8" />
+                <div>
+                  <h1>HISTORICAL DATA IS LOADING</h1>
+                  <div className="lds-ellipsis">
+                    <div id="5" />
+                    <div id="6" />
+                    <div id="7" />
+                    <div id="8" />
+                  </div>
                 </div>
               ) : (
                 <div>
