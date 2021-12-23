@@ -49,7 +49,7 @@ const App = function () {
       "wss://bad-api-assignment.reaktor.com/rps/live"
     )
     setLiveConnected(true)
-    socket.addEventListener("message", ({ messageData }) => {
+    socket.addEventListener("message", ({ data: messageData }) => {
       const parsedData = JSON.parse(JSON.parse(messageData))
       if (parsedData.type === "GAME_BEGIN") {
         setLiveData((currentData) => [...currentData, parsedData])
