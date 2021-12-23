@@ -20,6 +20,7 @@ const LiveMatchesTable = function ({ data }) {
     }
     return ""
   }
+
   return (
     <div>
       <table>
@@ -37,44 +38,36 @@ const LiveMatchesTable = function ({ data }) {
           )}
         </thead>
         <tbody>
-          {data.map((row, key) => (
-            <tr
-              key={key}
-              className={
-                row.playerA?.played && row.playerB?.played ? "highlight" : ""
-              }
-            >
-              <td
+          {data.map((row, key) => {
+            const victory = determineVictory(
+              row.playerA?.played,
+              row.playerB?.played
+            )
+            return (
+              <tr
+                key={key}
                 className={
-                  determineVictory(row.playerA?.played, row.playerB?.played) ===
-                  1
-                    ? "highlight-winner"
-                    : undefined
+                  row.playerA?.played && row.playerB?.played ? "highlight" : ""
                 }
               >
-                {row.playerA?.name}
-              </td>
-              <td className="hand">{row.playerA?.played}</td>
-              <td className="vs">VS</td>
-              <td
-                className={
-                  determineVictory(row.playerA?.played, row.playerB?.played) ===
-                  -1
-                    ? "highlight-winner"
-                    : undefined
-                }
-              >
-                {row.playerB?.name}
-              </td>
-              <td className="hand">{row.playerB?.played}</td>
-              <td>{getResultText(row)}</td>
-              <td>
-                {row.playerA?.played && row.playerB?.played
-                  ? "GAME OVER"
-                  : "GAME ONGOING"}
-              </td>
-            </tr>
-          ))}
+                <td className={victory === 1 ? "highlight-winner" : undefined}>
+                  {row.playerA?.name}
+                </td>
+                <td className="hand">{row.playerA?.played}</td>
+                <td className="vs">VS</td>
+                <td className={victory === -1 ? "highlight-winner" : undefined}>
+                  {row.playerB?.name}
+                </td>
+                <td className="hand">{row.playerB?.played}</td>
+                <td>{getResultText(row)}</td>
+                <td>
+                  {row.playerA?.played && row.playerB?.played
+                    ? "GAME OVER"
+                    : "GAME ONGOING"}
+                </td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
     </div>
