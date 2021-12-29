@@ -3,8 +3,8 @@ import axios from "axios"
 import axiosRetry from "axios-retry"
 
 import React, { useEffect, useState } from "react"
-import DataTable from "./dataTables/DataTable"
-import LiveMatchesTable from "./dataTables/LiveMatchesTable"
+import DataTable from "./datatables/DataTable"
+import LiveMatchesTable from "./datatables/LiveMatchesTable"
 import { ROCK, PAPER, SCISSORS, determineVictory } from "./util/util"
 
 const HOST = process.env.REACT_APP_URL
